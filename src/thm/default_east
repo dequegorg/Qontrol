@@ -1,0 +1,23 @@
+
+/* Main Window should be transparent; 
+alternatively it could have a background when fully implemented as Desktop*/
+
+
+
+/* Below is the MainWindow's styling as a background. For now transparent.
+MainWindow {background-image: url(./geometry-small-light-shadow.png);
+	    background-position: top left;
+	    background-repeat: repeat-xy}
+*/
+
+/*
+Here is the QTooBar default white colour QToolBar should be changed into its
+respective sub-classes.
+*/
+
+Panel {background-color: white;
+       border-top-left-radius : 10;
+       border-bottom-left-radius : 10}
+
+
+
