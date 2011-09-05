@@ -29,3 +29,11 @@ class Dashboard(QtGui.QFrame):
         self.logger.info('Dashboard size fixed at '+\
                          str(self.maximumWidth())+'*'+\
                          str(self.maximumHeight()))
+                         
+        self.label = QtGui.QLabel(QtCore.QString('Hiya and hello too!'))
+
+        self.layout = QtGui.QHBoxLayout()
+
+        self.layout.addWidget(self.label)
+
+        self.setLayout(self.layout)
