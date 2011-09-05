@@ -19,5 +19,14 @@ A panel, launcher and control centre for Linux environment.
 11.11.04.23.40 ALPHA
 
 --- HELP ---
-No set up so far.
+There is no setup file yet.
+Copy all content of ./src on eg. ~/Desktop
+Run python ./qontrol.py
+Scroll up and down on panel to show or hide the dashboard.
+There is currently no content to the dashboard or panel.
+You can change the orientation of the dashboard in the ~/.qontrol/cnf/user.cnf file, you can set the value to "south", "north", "west" or "east".
+Then restart Qontrol for configuration changes to take effect.
+
+Thanks for testing.
+
 

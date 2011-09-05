@@ -41,11 +41,11 @@ class Application(QtGui.QApplication):
         
         # enumerate path to user home and subdirectories        
         self.directories = {
-                    'main'  :   os.path.expanduser('~/.QDashboard'),
-                    'log'   :   os.path.expanduser('~/.QDashboard/log'),
-                    'cnf'   :   os.path.expanduser('~/.QDashboard/cnf'),
-                    'thm'   :   os.path.expanduser('~/.QDashboard/thm'),
-                    'ind'   :   os.path.expanduser('~/.QDashboard/ind')
+                    'main'  :   os.path.expanduser('~/.qontrol'),
+                    'log'   :   os.path.expanduser('~/.qontrol/log'),
+                    'cnf'   :   os.path.expanduser('~/.qontrol/cnf'),
+                    'thm'   :   os.path.expanduser('~/.qontrol/thm'),
+                    'ind'   :   os.path.expanduser('~/.qontrol/ind')
                                 }
         
         # get verbose option for logger        
@@ -120,12 +120,9 @@ class Application(QtGui.QApplication):
         # check if directories exist and if not, make them:
         for key, directory in self.directories.iteritems():
             if not os.path.exists(directory):
-                self.logger.warn('User directory "'+directory+'" was missing.')
                 try:
                     os.makedirs(directory)
-                    self.logger.info('Created directory"'+directory+'".')
                 except Exception as error:
-                    self.logger.error('There was an error creating directory: '+error.strerror)
                     pass
 
 
