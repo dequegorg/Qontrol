@@ -12,3 +12,5 @@ PanelWest {border-top-right-radius : 10;
 
 PanelEast {border-top-left-radius : 10;
             border-bottom-left-radius : 10}
+
+Dashboard {background-color: white}

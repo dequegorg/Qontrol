@@ -3,6 +3,7 @@
 from PyQt4 import QtGui, QtCore
 
 import panel
+import dashboard
 
 
 class MainWindow(QtGui.QFrame):
@@ -53,6 +54,7 @@ class MainWindow(QtGui.QFrame):
         self.logger.info('Window flags are set.')
 
 
+
 ################################################################################
 ###                         ORIENTATED CLASSES                               ###
 ################################################################################
@@ -73,11 +75,15 @@ class MainWindowSouth(MainWindow):
         # set fixed width
         self.setFixedWidth(self.screen_width *
                            self.application.configuration['ratio'])
-        self.logger.info('Width of main window set to '+str(self.maximumWidth()))
+        self.logger.info('Width of main window fixed at '+str(self.maximumWidth()))
 
         # instanciate south-oriented panel
         self.panel = panel.PanelSouth(self)
         self.logger.info('Instanciated South Panel.')
+
+        # instanciate dashboard
+        self.dashboard = dashboard.Dashboard(self)
+        self.logger.info('Instanciated Dashboard.')
         
         # instanciate vertical layout
         self.layout = QtGui.QVBoxLayout()
@@ -97,7 +103,8 @@ class MainWindowSouth(MainWindow):
         # set children
         self.layout.addWidget(self.panel)
         self.logger.info('Panel appended to layout.')
-        #TODO: add dash layout
+        self.layout.addWidget(self.dashboard)
+        self.logger.info('Dashboard appended to layout.')
 
         # set layout
         self.setLayout(self.layout)
@@ -129,6 +136,22 @@ class MainWindowSouth(MainWindow):
         # after the shoe() method of the main window has been called
         self.reserved_space = (0, 0, 0, self.panel.maximumHeight())
 
+    def wheelEvent(self, event):
+
+        """
+            Handles mouse wheel scroll events.
+            Panel shows and hides according to scroll direction and
+            window orientation.
+        """
+
+        if self.pos() == self.hide_position and event.delta() > 0:
+            self.move(self.show_position)
+
+        elif self.pos() == self.show_position and event.delta() < 0:
+            self.move(self.hide_position)
+        else:
+            pass
+
 
 
 class MainWindowNorth(MainWindow):
@@ -150,6 +173,10 @@ class MainWindowNorth(MainWindow):
         # instanciate north-oriented panel
         self.panel = panel.PanelNorth(self)
         self.logger.info('Instanciated North Panel.')
+
+        # instanciate dashboard
+        self.dashboard = dashboard.Dashboard(self)
+        self.logger.info('Instanciated Dashboard.')
         
         # instanciate vertical layout
         self.layout = QtGui.QVBoxLayout()
@@ -169,7 +196,8 @@ class MainWindowNorth(MainWindow):
         # set children
         self.layout.addWidget(self.panel)
         self.logger.info('Panel appended to layout.')
-        #TODO: add dash layout
+        self.layout.addWidget(self.dashboard)
+        self.logger.info('Dashboard appended to layout.')
 
         # set layout
         self.setLayout(self.layout)
@@ -202,6 +230,22 @@ class MainWindowNorth(MainWindow):
         # after the shoe() method of the main window has been called
         self.reserved_space = (0, 0, self.panel.maximumHeight(), 0)
 
+    def wheelEvent(self, event):
+
+        """
+            Handles mouse wheel scroll events.
+            Panel shows and hides according to scroll direction and
+            window orientation.
+        """
+
+        if self.pos() == self.hide_position and event.delta() < 0:
+            self.move(self.show_position)
+
+        elif self.pos() == self.show_position and event.delta() > 0:
+            self.move(self.hide_position)
+        else:
+            pass
+
 
 class MainWindowWest(MainWindow):
     
@@ -222,6 +266,10 @@ class MainWindowWest(MainWindow):
         # instanciate north-oriented panel
         self.panel = panel.PanelWest(self)
         self.logger.info('Instanciated West Panel.')
+
+        # instanciate dashboard
+        self.dashboard = dashboard.Dashboard(self)
+        self.logger.info('Instanciated Dashboard.')
         
         # instanciate vertical layout
         self.layout = QtGui.QHBoxLayout()
@@ -241,7 +289,8 @@ class MainWindowWest(MainWindow):
         # set children
         self.layout.addWidget(self.panel)
         self.logger.info('Panel appended to layout.')
-        #TODO: add dash layout
+        self.layout.addWidget(self.dashboard)
+        self.logger.info('Dashboard appended to layout.')
 
         # set layout
         self.setLayout(self.layout)
@@ -271,6 +320,22 @@ class MainWindowWest(MainWindow):
         # after the shoe() method of the main window has been called
         self.reserved_space = (self.panel.maximumWidth(), 0, 0, 0)
 
+    def wheelEvent(self, event):
+
+        """
+            Handles mouse wheel scroll events.
+            Panel shows and hides according to scroll direction and
+            window orientation.
+        """
+
+        if self.pos() == self.hide_position and event.delta() < 0:
+            self.move(self.show_position)
+
+        elif self.pos() == self.show_position and event.delta() > 0:
+            self.move(self.hide_position)
+        else:
+            pass
+
 
 class MainWindowEast(MainWindow):
     
@@ -290,6 +355,11 @@ class MainWindowEast(MainWindow):
 
         # instanciate north-oriented panel
         self.panel = panel.PanelEast(self)
+        self.logger.info('Instanciated East Panel.')
+
+        # instanciate dashboard
+        self.dashboard = dashboard.Dashboard(self)
+        self.logger.info('Instanciated Dashboard.')
         
         # instanciate vertical layout
         self.layout = QtGui.QHBoxLayout()
@@ -309,7 +379,8 @@ class MainWindowEast(MainWindow):
         # set children
         self.layout.addWidget(self.panel)
         self.logger.info('Panel appended to layout.')
-        #TODO: add dash layout
+        self.layout.addWidget(self.dashboard)
+        self.logger.info('Dashboard appended to layout.')
 
         # set layout
         self.setLayout(self.layout)
@@ -340,4 +411,19 @@ class MainWindowEast(MainWindow):
         self.reserved_space = (0, self.panel.maximumWidth(), 0, 0)
 
 
+    def wheelEvent(self, event):
+
+        """
+            Handles mouse wheel scroll events.
+            Panel shows and hides according to scroll direction and
+            window orientation.
+        """
+
+        if self.pos() == self.hide_position and event.delta() > 0:
+            self.move(self.show_position)
+
+        elif self.pos() == self.show_position and event.delta() < 0:
+            self.move(self.hide_position)
+        else:
+            pass
     
