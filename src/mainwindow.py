@@ -52,7 +52,60 @@ class MainWindow(QtGui.QFrame):
 #        # Tell X the window acts as a panel
         self.setAttribute(QtCore.Qt.WA_X11NetWmWindowTypeDock)
         self.logger.info('Window flags are set.')
+    
+    def show_dashboard(self):
+        
+        """
+            Triggers animation that will show the entire application with its
+            dashboard.
+        """
 
+        self.show_animation = QtCore.QPropertyAnimation(self, "pos")
+        self.show_animation.setDuration(200)
+        self.show_animation.setStartValue(self.hide_position)
+        self.show_animation.setEndValue(self.show_position)
+        self.show_animation.start()
+
+    def hide_dashboard(self):
+        
+        """
+            Triggers animation that will hide the entire application except for 
+            its panel.
+        """
+
+        self.hide_animation = QtCore.QPropertyAnimation(self, "pos")
+        self.hide_animation.setDuration(200)
+        self.hide_animation.setStartValue(self.show_position)
+        self.hide_animation.setEndValue(self.hide_position)
+        self.hide_animation.start()    
+        
+    def wheelEvent(self, event):
+
+        """
+            Handles mouse wheel scroll events.
+            Panel shows and hides according to scroll direction and
+            window orientation.
+        """
+
+        if self.orientation in ('south', 'east'):
+            if self.pos() == self.hide_position and event.delta() > 0:
+                self.show_dashboard()
+
+            elif self.pos() == self.show_position and event.delta() < 0:
+                self.hide_dashboard()
+
+            else:
+                pass
+        
+        if self.orientation in ('north', 'west'):
+            if self.pos() == self.hide_position and event.delta() < 0:
+                self.show_dashboard()
+
+            elif self.pos() == self.show_position and event.delta() > 0:
+                self.hide_dashboard()
+
+            else:
+                pass
 
 
 ################################################################################
@@ -69,7 +122,8 @@ class MainWindowSouth(MainWindow):
     
     def __init__(self):
         MainWindow.__init__(self)
-
+        
+        self.orientation = 'south'
         self.logger.info('Initiating South Main Window')
 
         # set fixed width
@@ -136,23 +190,6 @@ class MainWindowSouth(MainWindow):
         # after the shoe() method of the main window has been called
         self.reserved_space = (0, 0, 0, self.panel.maximumHeight())
 
-    def wheelEvent(self, event):
-
-        """
-            Handles mouse wheel scroll events.
-            Panel shows and hides according to scroll direction and
-            window orientation.
-        """
-
-        if self.pos() == self.hide_position and event.delta() > 0:
-            self.move(self.show_position)
-
-        elif self.pos() == self.show_position and event.delta() < 0:
-            self.move(self.hide_position)
-        else:
-            pass
-
-
 
 class MainWindowNorth(MainWindow):
     
@@ -163,6 +200,7 @@ class MainWindowNorth(MainWindow):
     def __init__(self):
         MainWindow.__init__(self)
         
+        self.orientation = 'north'
         self.logger.info('Initiating North Main Window')
 
         # set fixed width
@@ -230,22 +268,6 @@ class MainWindowNorth(MainWindow):
         # after the shoe() method of the main window has been called
         self.reserved_space = (0, 0, self.panel.maximumHeight(), 0)
 
-    def wheelEvent(self, event):
-
-        """
-            Handles mouse wheel scroll events.
-            Panel shows and hides according to scroll direction and
-            window orientation.
-        """
-
-        if self.pos() == self.hide_position and event.delta() < 0:
-            self.move(self.show_position)
-
-        elif self.pos() == self.show_position and event.delta() > 0:
-            self.move(self.hide_position)
-        else:
-            pass
-
 
 class MainWindowWest(MainWindow):
     
@@ -256,6 +278,7 @@ class MainWindowWest(MainWindow):
     def __init__(self):
         MainWindow.__init__(self)
 
+        self.orientation = 'west'
         self.logger.info('Initiating North Main Window')
 
         # set fixed height
@@ -320,22 +343,6 @@ class MainWindowWest(MainWindow):
         # after the shoe() method of the main window has been called
         self.reserved_space = (self.panel.maximumWidth(), 0, 0, 0)
 
-    def wheelEvent(self, event):
-
-        """
-            Handles mouse wheel scroll events.
-            Panel shows and hides according to scroll direction and
-            window orientation.
-        """
-
-        if self.pos() == self.hide_position and event.delta() < 0:
-            self.move(self.show_position)
-
-        elif self.pos() == self.show_position and event.delta() > 0:
-            self.move(self.hide_position)
-        else:
-            pass
-
 
 class MainWindowEast(MainWindow):
     
@@ -346,7 +353,8 @@ class MainWindowEast(MainWindow):
     def __init__(self):
         MainWindow.__init__(self)
 
-        self.logger.info('Initiating North Main Window')
+        self.orientation = 'east'
+        self.logger.info('Initiating East Main Window')
 
         # set fixed height
         self.setFixedHeight(self.screen_height *
@@ -410,20 +418,4 @@ class MainWindowEast(MainWindow):
         # after the shoe() method of the main window has been called
         self.reserved_space = (0, self.panel.maximumWidth(), 0, 0)
 
-
-    def wheelEvent(self, event):
-
-        """
-            Handles mouse wheel scroll events.
-            Panel shows and hides according to scroll direction and
-            window orientation.
-        """
-
-        if self.pos() == self.hide_position and event.delta() > 0:
-            self.move(self.show_position)
-
-        elif self.pos() == self.show_position and event.delta() < 0:
-            self.move(self.hide_position)
-        else:
-            pass
     
