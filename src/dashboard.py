@@ -3,6 +3,8 @@
 
 from PyQt4 import QtGui, QtCore
 
+import stack
+
 __version__ = "11.09.06.14.38"
 
 
@@ -13,7 +15,8 @@ __version__ = "11.09.06.14.38"
 class Dashboard(QtGui.QFrame):
     
     """
-       Class for the dashboard frame with stacked layout, which shows / hides.
+       Class for the dashboard window holding a frame with stacked layout.
+       The dashboard shows/hides on call from the panel bar button-indicators.
     """
     
     def __init__(self, orientation):
@@ -45,17 +48,26 @@ class Dashboard(QtGui.QFrame):
 
         # Set position
         self.define_positions()
-        self.move(self.show_position)
+        self.move(self.hide_position)
 
-        # DUMMY CONTENT
-        self.label = QtGui.QLabel(QtCore.QString('<h1>DASHBOARD</h1>'))
-        self.layout = QtGui.QHBoxLayout()
-        self.layout.setAlignment(QtCore.Qt.AlignCenter)
-        self.layout.addWidget(self.label)
-        self.setLayout(self.layout)
+        # Set appearance
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground, True)
 
-        # Tell X the window acts as a panel
+        # Set behaviour on X
         self.setAttribute(QtCore.Qt.WA_X11NetWmWindowTypeDock)
+
+        # Define stack orientation option
+        # NB: specific subclass should be used for style reference regarding orientation
+        self.stack_orientation_options = {'south' : stack.StackSouth,
+                                        'north' : stack.StackNorth,
+                                        'west' : stack.StackWest,
+                                        'east' : stack.StackEast}
+
+        self.stack = self.stack_orientation_options[self.orientation](self)
+        self.layout = QtGui.QVBoxLayout()
+        self.layout.setContentsMargins(0, 0, 0, 0)
+        self.layout.addWidget(self.stack)
+        self.setLayout(self.layout)
     
 
     def define_positions(self):

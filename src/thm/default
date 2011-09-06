@@ -1,16 +1,19 @@
 
 Panel, Panel * {background-color: white}
 
-DashboardSouth {border-top-left-radius : 10;
+StackSouth {border-top-left-radius : 10;
             border-top-right-radius : 10}
 
-DashboardNorth {border-bottom-left-radius : 10;
+StackNorth {border-bottom-left-radius : 10;
             border-bottom-right-radius : 10}
 
-DashboardWest {border-top-right-radius : 10;
+StackWest {border-top-right-radius : 10;
             border-bottom-right-radius : 10}
 
-DashboardEast {border-top-left-radius : 10;
+StackEast {border-top-left-radius : 10;
             border-bottom-left-radius : 10}
 
-Dashboard, Dashboard * {background-color: black}
+Stack, Stack * {background-color: white}
+Page, Page * {background-color: white}
+
+QLabel {background-color: white}

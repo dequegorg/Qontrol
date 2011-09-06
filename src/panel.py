@@ -336,19 +336,54 @@ class Bar(QtGui.QFrame):
             Buttons are also indicators, notifying the user of activity on the
             dashboard when hidden.
         """
-            
-        # TODO: Get the indicators configuration file:
         
-        # TODO: Get a list of all indicators
+        # get index of pages on dashboard stack
+        count = self.application.dashboard.stack.layout.count()  
+        self.logger.info("Panel found "+str(count)+" pages on dashboard.")
+        for index in range(0, count):
+            # Get page            
+            page = self.application.dashboard.stack.layout.widget(index)
+            # Get indicator from that page            
+            indicator = page.indicator
+            # Make the bar the parent of the indicator
+            indicator.setParent(self)
+            # append index to button for reference
+            indicator.index = index
+            # Connect indicator to stack layout
+            self.connect(indicator, QtCore.SIGNAL('clicked()'),
+                         self.check_stack_index)
+            self.layout.addWidget(indicator)
 
-        # TODO: Check which indicators are enabled
+    
+    def check_stack_index(self):
+        
+        """
+            Checks the index of the stack to see if it needs a switch or
+            a show/hide action.        
+        """
 
-        # TODO: Import and append indicators to the panel
+        button_index = self.sender().index
+        print "Button index is", button_index
+        
+        page_index = self.application.dashboard.stack.layout.currentIndex()
+        print "Current page index is", page_index
 
-        switch_one = QtGui.QPushButton('switch one', self)
-        self.connect(switch_one, QtCore.SIGNAL('clicked()'),
-                            self.application.dashboard.check_position)
-        self.layout.addWidget(switch_one)
+        if button_index == page_index and self.application.dashboard.pos() == self.application.dashboard.hide_position:
+            self.application.dashboard.show_dashboard()
+
+        elif button_index == page_index and self.application.dashboard.pos() == self.application.dashboard.show_position:
+            self.application.dashboard.hide_dashboard()
+
+        elif button_index != page_index and self.application.dashboard.pos() == self.application.dashboard.hide_position:
+            self.application.dashboard.stack.layout.setCurrentIndex(button_index)
+            self.application.dashboard.show_dashboard()
+        
+        else:
+            self.application.dashboard.stack.layout.setCurrentIndex(button_index)
+        
+        
+        
+        
 
             
 
