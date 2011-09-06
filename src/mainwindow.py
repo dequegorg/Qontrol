@@ -44,11 +44,11 @@ class MainWindow(QtGui.QFrame):
         # Set all flags required for the WM  to make the application behave 
         # like a dock / panel. It will skip the taskbar, it will have no frame 
         # and stay on top. NB: some of the flags may be redundant.
-        self.setWindowFlags(QtCore.Qt.Widget |
-            # Always on top:
-            QtCore.Qt.WindowStaysOnTopHint |
-            # No window decoration
-            QtCore.Qt.FramelessWindowHint )
+#        self.setWindowFlags(QtCore.Qt.Widget |
+#            # Always on top:
+#            QtCore.Qt.WindowStaysOnTopHint |
+#            # No window decoration
+#            QtCore.Qt.FramelessWindowHint )
 #        # Tell X the window acts as a panel
         self.setAttribute(QtCore.Qt.WA_X11NetWmWindowTypeDock)
         self.logger.info('Window flags are set.')
@@ -247,7 +247,6 @@ class MainWindowNorth(MainWindow):
                          str(self.width())+'*'+str(self.height()))
         
         # define position when hidden
-        # FIXME: may need to change is hiding dashboard while moved up because then self.height() will change.
         self.hide_position = QtCore.QPoint((self.screen_width - self.width())/2, # centre horizontally
                                            self.panel.height() - self.height()) # height of panel visible only
         self.logger.info('Hide position set to: '+\

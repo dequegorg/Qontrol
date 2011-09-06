@@ -53,6 +53,7 @@ class PanelSouth(Panel):
         self.setFixedHeight(25)
         self.setFixedWidth(self.parent().maximumWidth())
 
+
 class PanelNorth(Panel):
       
     """

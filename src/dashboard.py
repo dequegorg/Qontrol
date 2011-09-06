@@ -29,3 +29,60 @@ class Dashboard(QtGui.QFrame):
         self.logger.info('Dashboard size fixed at '+\
                          str(self.maximumWidth())+'*'+\
                          str(self.maximumHeight()))
+
+        # Define sections of the dashboard to switch to like tabs
+        self.sections = ['Applications',
+                         'Documents',
+                         'System',
+                         'Communications',
+                         'World',
+                         'News',
+                         'Organiser',
+                         'Sound',
+                         'Video']
+
+        # create layout:
+        self.layout = QtGui.QVBoxLayout()
+        
+        # add tabs
+        self.tabs = Tabs(self, self.sections)
+        self.layout.addWidget(self.tabs)
+      
+        # set layout
+        self.setLayout(self.layout)
+            
+
+
+
+
+class Tabs(QtGui.QTabWidget):
+    
+    # TODO: Perhaps use QStackedLayout instead?
+    
+    """
+        Class for content area of the dashboard.    
+    """
+    
+    def __init__(self, parent, sections):
+        QtGui.QTabWidget.__init__(self, parent)
+
+        self.setTabPosition(QtGui.QTabWidget.South)
+        self.tabBar().setExpanding(True)
+
+        for section in sections:
+            # TODO: replace content by actual content
+            label = QtCore.QString(section)
+            content = QtGui.QLabel(label)
+            self.addTab(content, label)
+
+#class Content(QtGui.QWidget):
+
+#    """
+#        Widget representing content of dashboard.
+#    """
+
+#    def __init__(self, label):
+#        QtGui.QWidget.__init__(self)
+
+#        self.label = 
+
