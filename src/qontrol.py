@@ -2,8 +2,7 @@
 
 
 __author__="benjamin"
-__date__ ="$Aug 20, 2011 9:27:18 PM$"
-__version__ = '11.08.30.22.29'
+__version__ = '11.09.06.14.37'
 
 
 
@@ -19,7 +18,8 @@ from PyQt4 import QtGui, QtCore
 import xwindow # module used to grab window on X for reserving space
 from logger import Logger
 
-import mainwindow
+import panel
+import dashboard
 
 ################################################################################
 #                             MAIN APPLICATION                                 #
@@ -72,7 +72,12 @@ class Application(QtGui.QApplication):
                                       'style' : 'default',
                                       'language' : 'english',
                                       'orientation' : 'south',
-                                      'ratio' : 0.8
+                                      'dashboard' : {'ratio' : 0.8},
+                                      'panel' : {'margin-vertical' : 2,
+                                                 'margin-horizontal' : 2,
+                                                 'button-spacing' : 2,
+                                                 'button-alignment' : 'center',
+                                                 'thickness' : 25}
                                       }
         
         # get user configuration
@@ -88,24 +93,19 @@ class Application(QtGui.QApplication):
                                error.strerror+' Running without style.')
             # the stylsheet string may be damaged, run without style
             pass
-
-        # create main window according to orientation in configuration
-        self.orientation_options = {'south' : mainwindow.MainWindowSouth,
-                                    'north' : mainwindow.MainWindowNorth,
-                                    'west'  : mainwindow.MainWindowWest,
-                                    'east'  : mainwindow.MainWindowEast
-                                    }
         
-        # Instantiate main window from class befitting orientation in configuration
+        # Instantiate windows from class befitting orientation in configuration
         # If error in configuration, southward orientation becomes default
-        self.main_window = self.orientation_options.get(self.configuration['orientation'], 'south')()
-        self.main_window.show()
-        self.logger.info('Request was made to paint window.')
+        self.dashboard = dashboard.Dashboard(self.configuration['orientation'])
+        self.dashboard.show()
+        self.panel = panel.Panel(self.configuration['orientation'])
+        self.panel.show()
+        self.logger.info('Request was made to paint the Dashboard and Panel.')
         
         # Grab window instance from X for reserving space.
         # This can only be done here, after show() has been called.        
-        self.x_window = xwindow.Window(self.main_window.winId())
-        self.x_window.reserve_space(*self.main_window.reserved_space)
+        self.x_window = xwindow.Window(self.panel.winId())
+        self.x_window.reserve_space(*self.panel.reserved_space)
         self.logger.info('Reserved space for window was requested from X.')
         
 
