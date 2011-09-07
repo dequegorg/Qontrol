@@ -19,7 +19,14 @@ A panel, launcher and control centre for Linux environment.
 11.09.06.15.18 ALPHA
 
 --- HELP ---
-There is no setup file yet.
+There is no setup yet, so you have to install dependencies yourself.
+Required modules are:
+    * PyQt4
+    * Xlib
+
+Run:
+sudo apt-get install python-qt4 python-xlib
+
 Copy all content of ./src on eg. ~/Desktop
 Run python ./qontrol.py
 Click on the panel buttons to show or hide the dashboard.
